@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container{
+        display: grid;
+        height: 100vh;
+        grid-template-columns: 1fr 1fr ;
+         grid-template-rows: 30% 70%; 
+        grid-gap:2px;
+        
+        }
+
+    .container>*{
+        background-color: aqua;
+
+    }    
+    
+       
+    .result:nth-child(1){
+        grid-column: 1/2;
+        grid-row: 1/3;
+     
+        
+    }
+
+    .worldBox:nth-child(2){
+        grid-column: 2/3;
+        
+    }
+
+    .alphaBox:nth-child(3){
+        grid-column: 2/3;
+        
+    }
+
+    .alphaBox{
+        display: grid;
+        grid-template-columns: repeat(7 ,14%);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .alpha{
+
+        width: 30px;
+        height: 30px;
+        background-color: yellow;
+        border:3px solid red;
+        /* border-color: red; */
+        border-radius: 50%;
+        padding: 20px;
+        
+         /* justify-content: center;
+        align-items: center;  */
+    }
+
+    .alpha{
+        display: flex;
+
+
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .worldBox{
+
+        display: flex;
+
+
+justify-content: center;
+align-items: center;
+
+        
+    }
+
+    .worldBox{
+
+        letter-spacing: 10px;
+    }
+
+    .disable{
+
+        background: #5a5858;
+        color: red;
+
+    }
+                 
+                
+</style>
+<body>
+    <div class=container>
+        <div class="result"></div>
+        <div class="worldBox" id="world"></div>
+        <div class="alphaBox" id="alphabets" ></div>
+
+    </div>
+
+    <script>
+
+            window.onload=function(){
+
+                
+            let resultBox=document.getElementById("result");
+            let images={4:`<img src="frame.jpg">`,
+                        3:`<img src="noose.jpg">`,
+                        2:`<img src="body01-head-dead.jpg">`}
+
+            let alphabets="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let alphaBox=document.getElementById("alphabets");
+            let alphastr="";
+
+            for (let i=0;i<alphabets.length;i++){
+                alphastr +=`<div class="alpha" > ${alphabets[i]} </div>`;
+                }
+
+            alphaBox.innerHTML=alphastr;
+            alphaBox.onclick=function(e){
+            console.log(e.target);
+                    if (e.target && e.target.className=="alpha"){
+                                                                    let letter= e.target.innerHTML.trim();
+                                                                    dword=update(letter,word);
+                                                                    // console.log(dword);
+                                                                    updateRes(dword);
+                                                                    e.target.classList.add("disable")
+                                                                    if(word.includes(letter)){
+                                                                                                updateRes(dword);
+                                                                                            }
+                     else {
+                                    updateLife();
+                          }
+
+                    if(life<=0){
+                                alert("you Loose");
+                                }
+
+                                                                }
+
+                     
+
+                    //  alert(e.target.innerHTML);
+                }
+
+            
+        }
+
+
+            function randomWord(){
+                let words=["Tokyo", "Dharwad", "Hubli", "Bangalore"];
+                let randomWord=  words [Math.floor(Math.random() * words.length)];
+                console.log(randomWord);
+                return randomWord;
+
+            }
+
+            randomWord();
+
+            let word =  randomWord().toUpperCase()
+
+            function genDashstring(randomWord){
+                    return  Array.from(randomWord)
+                //  console.log(c);
+                     .map(letter=>"_")
+                     .join("")
+                    }
+
+           let dword=genDashstring(word) ;
+
+
+           function updateRes(word){
+           let wordbox=document.getElementById("world");
+           wordbox.innerHTML=`<h1> ${word} </h1>`
+           }
+
+        //    let g=updateRes();
+
+           updateRes(dword);
+
+           function update(letter,word){
+           return Array.from(word).map((l,i)=>l==letter?l:dword[i]).join("")
+           }
+
+           let life=5;
+
+          function updateLife() {
+          life--;
+          }
+    
+    </script>
+</body>
+</html>
