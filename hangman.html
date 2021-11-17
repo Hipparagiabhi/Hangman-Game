@@ -71,18 +71,21 @@
 
     .worldBox{
 
-        display: flex;
-
-
-justify-content: center;
-align-items: center;
-
-        
+        display:flex;
+        justify-content:center;
+        align-items: center;  
     }
+
+       .aur{
+         display:flex;
+        justify-content:center;
+        align-items:center;
+    }   
 
     .worldBox{
 
         letter-spacing: 10px;
+       
     }
 
     .disable{
@@ -91,26 +94,76 @@ align-items: center;
         color: red;
 
     }
-                 
-                
+
+    .result{
+        position: relative;      
+    }
+    .image1{
+        position: absolute;
+        left:25%;
+
+    }
+    .image2{
+        position:absolute;
+        top:37px;
+        left:45%;
+        width:50px;
+    }        
+    .image3{
+        position: absolute;
+        top:140px;
+        left:45%;
+        width:50px;
+    }
+
+    .image4{
+        position:absolute;
+        height:100vh;
+        width:100%;
+        background: aqua;
+        color:red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size:50px;
+
+
+
+    }
+
+    .test{
+        position: relative;
+        background: crimson;
+        width:200%;
+        height:50px;
+
+
+    }
 </style>
 <body>
     <div class=container>
-        <div class="result"></div>
-        <div class="worldBox" id="world"></div>
+        <div class="result" id="result"  > 
+        
+        </div>
+        <div >
+            
+            <div class="worldBox" id="world" ></div>
+            <h1 class="aur">Guess the city Names</h1>
+        </div>
         <div class="alphaBox" id="alphabets" ></div>
+        <button class="test" onclick=window.location.reload()>For Next Guess</button>
+        
 
     </div>
 
     <script>
 
+        
+
             window.onload=function(){
 
-                
-            let resultBox=document.getElementById("result");
-            let images={4:`<img src="frame.jpg">`,
-                        3:`<img src="noose.jpg">`,
-                        2:`<img src="body01-head-dead.jpg">`}
+                        
+        
 
             let alphabets="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             let alphaBox=document.getElementById("alphabets");
@@ -134,13 +187,42 @@ align-items: center;
                                                                                             }
                      else {
                                     updateLife();
+                                    resultBox.innerHTML+=images[life];
                           }
 
                     if(life<=0){
-                                alert("you Loose");
+                                 
+
+                                 resultBox.innerHTML=`<div class="image4"> U Loose-   Try Again ,
+                                     <span style="color:yellow">To Continue press Next Guess</span> </div>`;
+
+                                     document.getElementById('alphabets').style.pointerEvents = 'none';
+                                    
+                                    
+
+                                // alert("you Loose");
                                 }
 
-                                                                }
+                    }
+
+                    
+                    function updateshow(){
+
+                        if(word==dword){
+
+                            resultBox.innerHTML=`<div class="image4"> U Win  </div>`;
+                            // console.log("u win");
+                        }
+
+                        // else{
+
+                        //     resultBox.innerHTML=`<div class="image4"> U loose </div>`;
+                        // }
+
+                    }
+
+                    updateshow();
+                 
 
                      
 
@@ -148,11 +230,11 @@ align-items: center;
                 }
 
             
-        }
+        
 
 
             function randomWord(){
-                let words=["Tokyo", "Dharwad", "Hubli", "Bangalore"];
+                let words=["Tokyo", "Dharwad", "Hubli", "Bangalore","Bijapur"];
                 let randomWord=  words [Math.floor(Math.random() * words.length)];
                 console.log(randomWord);
                 return randomWord;
@@ -175,7 +257,7 @@ align-items: center;
 
            function updateRes(word){
            let wordbox=document.getElementById("world");
-           wordbox.innerHTML=`<h1> ${word} </h1>`
+           wordbox.innerHTML= `<h1> ${word} </h1>`;
            }
 
         //    let g=updateRes();
@@ -186,12 +268,19 @@ align-items: center;
            return Array.from(word).map((l,i)=>l==letter?l:dword[i]).join("")
            }
 
-           let life=5;
+           let life=4;
 
           function updateLife() {
           life--;
           }
-    
+
+          
+          let resultBox=document.getElementById("result");
+            let images={3:`<img src="./hangman/frame.jpg" class="image1">`,
+                        2:`<img src="./hangman/noose.jpg" class="image2">`,
+                        1:`<img src="./hangman/body01-head.png" class="image3">`
+        }
+        }
     </script>
 </body>
 </html>
